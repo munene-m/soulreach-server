@@ -10,3 +10,14 @@ export const updateProfileSchema = z.object({
   email: z.string().email("Invalid email format").min(1).optional(),
   phone: z.string().min(1).optional(),
 });
+
+export const createSoulWinningRecordSchema = z.object({
+  minister: z.string().min(1),
+  date: z.string().date(),
+  soulsWon: z.number().min(1),
+  contacts: z.array(z.object({
+    name: z.string().min(1),
+    phoneNumber: z.string().min(1)
+  })),
+});
+

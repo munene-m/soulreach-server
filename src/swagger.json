@@ -163,6 +163,58 @@
             }
           }
         }
+      },
+      "SoulWinningRecord": {
+        "type": "object",
+        "required": ["minister", "date", "soulsWon", "contacts", "eventName"],
+        "properties": {
+          "minister": {
+            "type": "string",
+            "example": "650912c6fd6fd4h2b4f31f2r"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "soulsWon": {
+            "type": "number",
+            "example": 5
+          },
+          "contacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "phoneNumber": {
+                  "type": "string", 
+                  "example": "+233241234567"
+                }
+              }
+            }
+          },
+          "eventName": {
+            "type": "string",
+            "example": "Sunday Evangelism"
+          }
+        }
+      },
+      "SubRegionRequest": {
+        "type": "object",
+        "required": ["region", "name"],
+        "properties": {
+          "region": {
+            "type": "string",
+            "example": "650912c6fd6fd4h2b4f31f2r"
+          },
+          "name": {
+            "type": "string",
+            "example": "North West Sub-Region"
+          }
+        }
       }
     }
   },
@@ -363,12 +415,254 @@
           }
         }
       }
+    },
+    "/soulWinning/create": {
+      "post": {
+        "tags": ["Soul Winning"],
+        "summary": "Create a soul winning record",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoulWinningRecord"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Record created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Record created successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/SoulWinningRecord"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/soulWinning/getRecords/{ministerId}": {
+      "get": {
+        "tags": ["Soul Winning"],
+        "summary": "Get soul winning records for a specific minister",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "ministerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records fetched successfully"
+          }
+        }
+      }
+    },
+    "/region/createSubRegion": {
+      "post": {
+        "tags": ["Region Management"],
+        "summary": "Create a new sub-region",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubRegionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sub-region created successfully"
+          }
+        }
+      }
+    },
+    "/region/getSubRegions/{region}": {
+      "get": {
+        "tags": ["Region Management"],
+        "summary": "Get all sub-regions for a region",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub-regions fetched successfully"
+          }
+        }
+      }
+    },
+    "/soulWinning/soulWinningRecords": {
+      "get": {
+        "tags": ["Soul Winning"],
+        "summary": "Get all soul winning records for a region",
+        "description": "Retrieves all soul winning records for pastors under a Regional Overseer's jurisdiction",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Region soul winning records fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Region soul winning records fetched successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SoulWinningRecord"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to fetch region soul winning records"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/soulWinning/subRegionSoulWinningRecords": {
+      "get": {
+        "tags": ["Soul Winning"],
+        "summary": "Get all soul winning records for a sub-region",
+        "description": "Retrieves all soul winning records for pastors under a Sub-Regional Overseer's jurisdiction",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Sub region soul winning records fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Sub region soul winning records fetched successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SoulWinningRecord"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to fetch sub region soul winning records"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/soulWinning/getAllSoulWinningRecords": {
+      "get": {
+        "tags": ["Soul Winning"],
+        "summary": "Get all soul winning records (Bishop only)",
+        "description": "Retrieves all soul winning records across all regions (restricted to Bishop role)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "All soul winning records fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "All soul winning records fetched successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SoulWinningRecord"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "tags": [
     {
       "name": "Region Management",
       "description": "Endpoints for managing church regions"
+    },
+    {
+      "name": "Soul Winning",
+      "description": "Endpoints for managing soul winning records"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import Region from "../models/region";
+import SubRegion from "../models/subRegion";
 import { Request, Response } from "express";
 
 export const createRegion = async (req: Request, res: Response) => {
@@ -33,3 +34,49 @@ export const createRegion = async (req: Request, res: Response) => {
       });
     }
   };
+
+export const createSubRegion = async (req: Request, res: Response) => {
+    const { region, name } = req.body;
+    if(!region || !name){
+        return res.status(400).json({
+            message: "Region and name are required"
+        });
+    }
+    const existingRegion = await Region.findById(region);
+    if(!existingRegion){
+        return res.status(400).json({
+            message: "Region not found"
+        });
+    }
+    const existingSubRegion = await SubRegion.findOne({region, name});
+    if(existingSubRegion){
+        return res.status(400).json({
+            message: "SubRegion already exists"
+        });
+    }
+    const subRegion = await SubRegion.create({region, name});
+    return res.status(201).json({
+        message: "SubRegion created successfully",
+        subRegion
+    });
+ }
+
+ export const getSubRegions = async (req: Request, res: Response) => {
+    const { region } = req.params;
+    if(!region){
+        return res.status(400).json({
+            message: "Region is required"
+        });
+    }
+    const existingRegion = await Region.findById(region);
+    if(!existingRegion){
+        return res.status(400).json({
+            message: "Region not found"
+        });
+    }
+    const subRegions = await SubRegion.find({region});
+    return res.status(200).json({
+        message: "SubRegions fetched successfully",
+        subRegions
+    });
+ }
