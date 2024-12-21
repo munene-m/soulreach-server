@@ -10,17 +10,3 @@ services:
       - "3001:3001"
     env_file:
       - .env
-    depends_on:
-      - rabbitmq
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "5672:5672" # AMQP protocol port
-      - "15672:15672" # Management interface port
-    environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=password
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-volumes:
-  rabbitmq_data:

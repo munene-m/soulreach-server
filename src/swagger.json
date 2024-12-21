@@ -299,7 +299,12 @@
       "post": {
         "tags": ["Region Management"],
         "summary": "Create a new region",
-        "description": "Create a new region in the system. Currently accessible to all users, but intended to be restricted to BISHOP role.",
+        "description": "Create a new region in the system. Currently restricted to BISHOP role.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
