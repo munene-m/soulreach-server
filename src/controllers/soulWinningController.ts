@@ -6,11 +6,16 @@ import User from "../models/user";
 
 export const createSoulWinningRecord = async (req:Request, res:Response) => {
     const { minister, date, soulsWon, contacts, eventName } = req.body;
-
-
     const validatedData = createSoulWinningRecordSchema.parse({ minister, date, soulsWon, contacts, eventName });
 
-    try {        
+    try {
+        // Validate that number of contacts matches souls won
+        if (validatedData.contacts.length !== validatedData.soulsWon) {
+            return res.status(400).json({
+                message: "Number of contacts must match number of souls won",
+                error: `Expected ${validatedData.soulsWon} contacts but got ${validatedData.contacts.length}`
+            });
+        }
         const soulWinningRecord = await SoulWinningRecord.create({
             minister: validatedData.minister,
             date: validatedData.date,
