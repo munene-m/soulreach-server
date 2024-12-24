@@ -13,11 +13,12 @@ export const updateProfileSchema = z.object({
 
 export const createSoulWinningRecordSchema = z.object({
   minister: z.string().min(1),
-  date: z.string().date(),
+  date: z.string().datetime(),
   soulsWon: z.number().min(1),
-  contacts: z.array(z.object({
-    name: z.string().min(1),
-    phoneNumber: z.string().min(1)
-  })),
+  contacts: z.array(
+    z.object({
+      name: z.string().min(1),
+      phoneNumber: z.string().min(1),
+    })
+  ),
 });
-

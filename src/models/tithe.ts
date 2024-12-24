@@ -10,6 +10,7 @@ interface ITithe extends mongoose.Document {
   paymentDate?: Date;
   paystackTransactionId?: string;
   metadata?: Record<string, any>;
+  church: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -53,6 +54,11 @@ const titheSchema = new mongoose.Schema<ITithe>({
   metadata: {
     type: Map,
     of: mongoose.Schema.Types.Mixed
+  },
+  church: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Church",
+    required: true
   }
 }, {
   timestamps: true

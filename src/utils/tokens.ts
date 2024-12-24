@@ -18,10 +18,7 @@ export async function refreshAccessToken(id: ObjectId): Promise<string | null> {
       return "An error occured. Please log in again.";
     }
 
-    const decoded = jwt.verify(
-    user.refreshToken,
-      process.env.REFRESH_TOKEN_SECRET as string
-    ) as DecodedToken;
+    const decoded = jwt.verify(user.refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as DecodedToken;
 
     const newAccessToken = generateAccessToken(decoded.userId, decoded.email, decoded.role);
 
@@ -37,18 +34,20 @@ export async function refreshAccessToken(id: ObjectId): Promise<string | null> {
 }
 
 export const generateAccessToken = (id: string, email: string, role: string) => {
-  return jwt.sign({
-    userId: id,
-    email,
-    role
-  },
-  config.jwt.secret!,
-  {
-    expiresIn: "24h",
-    algorithm: "HS256",
-    audience: config.jwt.audience,
-    issuer: config.jwt.issuer,
-  });
+  return jwt.sign(
+    {
+      userId: id,
+      email,
+      role,
+    },
+    config.jwt.secret!,
+    {
+      expiresIn: "24h",
+      algorithm: "HS256",
+      audience: config.jwt.audience,
+      issuer: config.jwt.issuer,
+    }
+  );
 };
 
 export const generateRefreshToken = (id: string) => {

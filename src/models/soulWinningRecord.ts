@@ -6,7 +6,7 @@ interface IContact {
 }
 
 interface ISoulWinningRecord extends mongoose.Document {
-  minister: mongoose.Types.ObjectId;
+  minister: mongoose.Schema.Types.ObjectId;
   date: Date;
   soulsWon: number;
   contacts: IContact[];

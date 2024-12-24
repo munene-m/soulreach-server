@@ -28,6 +28,7 @@ export const initializePayment = async (req: Request, res: Response) => {
         // Create tithe record
         const tithe = await Tithe.create({
             user: user._id,
+            church: user.church,
             amount,
             month: new Date(month),
             transactionReference,
@@ -45,7 +46,7 @@ export const initializePayment = async (req: Request, res: Response) => {
             metadata: {
                 titheId: tithe._id,
                 userId: user._id,
-                churchName: user.churchName,
+                church: user.church,
                 region: user.region
             }
         };

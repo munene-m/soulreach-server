@@ -1,0 +1,100 @@
+{
+  "schemas": {
+    "Region": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "650912c6fd6fd4h2b4f31f2r"
+        },
+        "name": {
+          "type": "string",
+          "example": "Western Region"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SubRegion": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "650912c6fd6fd4h2b4f31f2r"
+        },
+        "name": {
+          "type": "string",
+          "example": "North West Sub-Region"
+        },
+        "region": {
+          "$ref": "#/components/schemas/Region"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RegisterUser": {
+      "properties": {
+        "region": {
+          "$ref": "#/components/schemas/Region"
+        },
+        "subRegion": {
+          "$ref": "#/components/schemas/SubRegion"
+        }
+      }
+    },
+    "LoginResponse": {
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "region": {
+              "$ref": "#/components/schemas/Region"
+            },
+            "subRegion": {
+              "$ref": "#/components/schemas/SubRegion"
+            }
+          }
+        }
+      }
+    },
+    "CreateRegionResponse": {
+      "properties": {
+        "region": {
+          "$ref": "#/components/schemas/Region"
+        }
+      }
+    },
+    "SubRegionResponse": {
+      "properties": {
+        "subRegion": {
+          "$ref": "#/components/schemas/SubRegion"
+        }
+      }
+    },
+    "ChurchResponse": {
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "subRegion": {
+              "$ref": "#/components/schemas/SubRegion"
+            }
+          }
+        }
+      }
+    }
+  }
+}

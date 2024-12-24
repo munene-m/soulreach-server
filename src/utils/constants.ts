@@ -5,12 +5,11 @@ export enum UserRole {
   PASTOR = "PASTOR",
   REGIONAL_OVERSEER = "REGIONAL_OVERSEER",
   SUB_REGIONAL_OVERSEER = "SUB_REGIONAL_OVERSEER",
-  BISHOP = "BISHOP"
+  BISHOP = "BISHOP",
+  ADMIN = "ADMIN",
 }
 
-export type EmailTemplate =
-  | "Verify"
-  | "ChangePassword"
+export type EmailTemplate = "Verify" | "ChangePassword";
 
 export interface EmailData {
   to: string;
@@ -26,7 +25,7 @@ export interface EmailError extends Error {
 }
 
 // export async function sendOtp(type: "Email" | "Phone", value: string) {
- 
+
 //   await Otp.create({
 //     [type.toLowerCase()]: value,
 //     otp: code,

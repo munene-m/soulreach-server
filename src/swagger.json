@@ -5,7 +5,7 @@
     "description": "Soulreach API documentaion",
     "version": "0.0.1"
   },
-  "servers": [ 
+  "servers": [
     {
       "url": "http://localhost:4000/api/v1",
       "description": "Local development server for soulreach API"
@@ -22,19 +22,19 @@
     "schemas": {
       "RegisterUser": {
         "type": "object",
-        "required": ["username", "churchName", "region", "email", "password", "role"],
+        "required": ["username", "church", "region", "email", "password", "role"],
         "properties": {
           "username": {
             "type": "string",
             "example": "John Doe"
           },
-          "churchName": {
+          "church": {
             "type": "string",
-            "example": "Grace Chapel"
+            "example": "650912c6fd6fd4h2b4f31f2r"
           },
           "region": {
             "type": "string",
-            "example": "Eastern Region"
+            "example": "650912c6fd6fd4h2b4f31f2r"
           },
           "subRegionalOverseer": {
             "type": "string",
@@ -108,13 +108,13 @@
                 "type": "string",
                 "example": "John Doe"
               },
-              "churchName": {
+              "church": {
                 "type": "string",
-                "example": "Grace Chapel"
+                "example": "650912c6fd6fd4h2b4f31f2r"
               },
               "region": {
                 "type": "string",
-                "example": "Eastern Region"
+                "example": "E650912c6fd6fd4h2b4f31f2r"
               },
               "role": {
                 "type": "string",
@@ -142,25 +142,7 @@
             "example": "Region created successfully"
           },
           "region": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "example": "650912c6fd6fd4h2b4f31f2r"
-              },
-              "name": {
-                "type": "string",
-                "example": "Western Region"
-              },
-              "createdAt": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updatedAt": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
+            "$ref": "#/components/schemas/Region"
           }
         }
       },
@@ -190,7 +172,7 @@
                   "example": "John Doe"
                 },
                 "phoneNumber": {
-                  "type": "string", 
+                  "type": "string",
                   "example": "+233241234567"
                 }
               }
@@ -199,6 +181,24 @@
           "eventName": {
             "type": "string",
             "example": "Sunday Evangelism"
+          },
+          "_id": {
+            "type": "string",
+            "example": "676adfeab4a7f3b6a2c00d78"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-24T16:23:06.185Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-24T16:23:06.185Z"
+          },
+          "__v": {
+            "type": "integer",
+            "example": 0
           }
         }
       },
@@ -213,6 +213,103 @@
           "name": {
             "type": "string",
             "example": "North West Sub-Region"
+          }
+        }
+      },
+      "SubRegionResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Sub-region created successfully"
+          },
+          "subRegion": {
+            "$ref": "#/components/schemas/SubRegion"
+          }
+        }
+      },
+      "ChurchRequest": {
+        "type": "object",
+        "required": ["name", "subRegion"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Grace Chapel"
+          },
+          "subRegion": {
+            "type": "string",
+            "example": "650912c6fd6fd4h2b4f31f2r"
+          }
+        }
+      },
+
+      "Church": {
+        "type": "object",
+        "required": ["name", "subRegion"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "650912c6fd6fd4h2b4f31f2r"
+          },
+          "name": {
+            "type": "string",
+            "example": "Grace Chapel"
+          },
+          "subRegion": {
+            "$ref": "#/components/schemas/SubRegion"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Region": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "650912c6fd6fd4h2b4f31f2r"
+          },
+          "name": {
+            "type": "string",
+            "example": "Western Region"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SubRegion": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "650912c6fd6fd4h2b4f31f2r"
+          },
+          "name": {
+            "type": "string",
+            "example": "North West Sub-Region"
+          },
+          "region": {
+            "$ref": "#/components/schemas/Region"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
@@ -347,11 +444,77 @@
         }
       }
     },
-    "/region/create": {
+
+    "/auth/admin-login": {
       "post": {
-        "tags": ["Region Management"],
+        "tags": ["Authentication"],
+        "summary": "Login admin",
+        "description": "Authenticate admin with email and password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid email or password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to login"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/region": {
+      "post": {
+        "tags": ["Church Management"],
         "summary": "Create a new region",
-        "description": "Create a new region in the system. Currently restricted to BISHOP role.",
+        "description": "Create a new region in the system. Currently restricted to BISHOP and ADMIN roles.",
         "security": [
           {
             "bearerAuth": []
@@ -407,6 +570,35 @@
                     },
                     "error": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Church Management"],
+        "summary": "Get all regions",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Regions fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Regions fetched successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Region"
+                      }
                     }
                   }
                 }
@@ -476,9 +668,10 @@
         }
       }
     },
-    "/region/createSubRegion": {
+
+    "/subRegion": {
       "post": {
-        "tags": ["Region Management"],
+        "tags": ["Church Management"],
         "summary": "Create a new sub-region",
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -492,22 +685,28 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Sub-region created successfully"
+          "200": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Sub-regions fetched successfully"
+              },
+              "data": {
+                "$ref": "#/components/schemas/SubRegion"
+              }
+            }
           }
         }
-      }
-    },
-    "/region/getSubRegions/{region}": {
+      },
       "get": {
-        "tags": ["Region Management"],
-        "summary": "Get all sub-regions for a region",
+        "tags": ["Church Management"],
+        "summary": "Get all sub-regions",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
             "name": "region",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -515,7 +714,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Sub-regions fetched successfully"
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Sub-regions fetched successfully"
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SubRegion"
+                }
+              }
+            }
           }
         }
       }
@@ -653,13 +864,105 @@
           }
         }
       }
+    },
+
+    "/church": {
+      "post": {
+        "tags": ["Church Management"],
+        "summary": "Create a new church",
+        "description": "Create a new church (Bishop only)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChurchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Church created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Church created successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Church"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized - Only bishops can create churches"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Church Management"],
+        "summary": "Get churches",
+        "description": "Get all churches or filter by subRegion",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "subRegion",
+            "schema": {
+              "type": "string"
+            },
+            "description": "SubRegion ID to filter churches"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Churches fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Churches fetched successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Church"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "tags": [
     {
-      "name": "Region Management",
-      "description": "Endpoints for managing church regions"
+      "name": "Authentication",
+      "description": "Endpoints for authenticating users and admin"
     },
+
+    {
+      "name": "Church Management",
+      "description": "Endpoints for managing churches"
+    },
+
     {
       "name": "Soul Winning",
       "description": "Endpoints for managing soul winning records"

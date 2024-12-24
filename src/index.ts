@@ -10,8 +10,11 @@ import { connectDB } from "./config/db";
 //routes
 import authRoute from "./routes/auth";
 import regionRoute from "./routes/region";
+import subRegionRoute from "./routes/subRegion";
+import churchRoute from "./routes/church";
 import userRoute from "./routes/user";
 import soulWinningRoute from "./routes/soulWinning";
+import { adminRegister } from "./utils/admin";
 const app = express();
 dotenv.config();
 app.use(cors());
@@ -19,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
 connectDB();
+
 const PORT = config.port;
 
 app.get("/", (_, res) => {
@@ -28,10 +32,13 @@ app.get("/", (_, res) => {
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(`/${config.prefix}/auth`, authRoute);
 app.use(`/${config.prefix}/region`, regionRoute);
+app.use(`/${config.prefix}/subRegion`, subRegionRoute);
 app.use(`/${config.prefix}/user`, userRoute);
 app.use(`/${config.prefix}/soulWinning`, soulWinningRoute);
+app.use(`/${config.prefix}/church`, churchRoute);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  // await adminRegister();
   console.log(`Server running on port ${PORT}`);
 });
 
