@@ -12,31 +12,31 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-interface EnrouteResetPasswordEmailProps {
+interface SoulreachResetPasswordEmailProps {
   userFirstname?: string;
   resetCode?: string;
 }
 
-export const EnrouteResetPasswordEmail = ({
+export const SoulreachResetPasswordEmail = ({
   resetCode,
-}: EnrouteResetPasswordEmailProps) => {
+}: SoulreachResetPasswordEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Enroute reset your password</Preview>
+      <Preview>Soulreach reset your password</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
-            style={enrouteLogo}
+            style={soulreachLogo}
             src={
-              "https://res.cloudinary.com/dr2jx6j6m/image/upload/v1722345467/enroute-image_nygkz0.jpg"
+              "https://res.cloudinary.com/dr2jx6j6m/image/upload/v1722345467/soulreach-image_nygkz0.jpg"
             }
-            alt="Enroute"
+            alt="Soulreach"
           />
           <Section>
             <Text style={text}>Hi,</Text>
             <Text style={text}>
-              Someone recently requested a password change for your Enroute
+              Someone recently requested a password change for your Soulreach
               account. If this was you, use the code below:
             </Text>
             <Section style={verificationSection}>
@@ -66,12 +66,12 @@ export const EnrouteResetPasswordEmail = ({
   );
 };
 
-EnrouteResetPasswordEmail.PreviewProps = {
+SoulreachResetPasswordEmail.PreviewProps = {
   userFirstname: "Alan",
   resetPasswordLink: "https://liquidhack.co.ke",
-} as EnrouteResetPasswordEmailProps;
+} as SoulreachResetPasswordEmailProps;
 
-export default EnrouteResetPasswordEmail;
+export default SoulreachResetPasswordEmail;
 
 const main = {
   backgroundColor: "#f6f9fc",
@@ -84,7 +84,7 @@ const container = {
   padding: "45px",
 };
 
-const enrouteLogo = {
+const soulreachLogo = {
   width: "20%",
   height: "20%",
 };

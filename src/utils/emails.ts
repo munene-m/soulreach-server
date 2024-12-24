@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: config.enrouteEmail,
-    pass: config.enrouteEmailPass,
+    user: config.soulreachEmail,
+    pass: config.soulreachEmailPass,
   },
   tls: {
     rejectUnauthorized: config.nodeEnv === "production",
@@ -52,7 +52,7 @@ export const createMailOptions = async (
 ) => {
   const { to, subject } = emailData;
   return {
-    from: `Enroute <${config.enrouteEmail}>`,
+    from: `Soulreach <${config.soulreachEmail}>`,
     to,
     subject,
     html: htmlContent,
@@ -84,8 +84,8 @@ export const sendEmail = async (
       try {
         const htmlContent = await renderTemplate(templateName, data);
 
-        let header = "Enroute";
-        let sender = config.enrouteEmail;
+        let header = "Soulreach";
+        let sender = config.soulreachEmail;
         const mailOptions = {
           from: `${header} <${sender}>`,
           to,

@@ -37,7 +37,7 @@ export interface EmailError extends Error {
 //     await sendEmailWithRetry({
 //       to: value,
 //       subject: "Verify your new email",
-//       templateName: "EnrouteVerify" as EmailTemplate,
+//       templateName: "SoulreachVerify" as EmailTemplate,
 //       data: { verificationCode: code },
 //     });
 //   }

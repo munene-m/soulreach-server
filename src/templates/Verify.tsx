@@ -13,17 +13,17 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-interface EnrouteVerifyEmailProps {
+interface SoulreachVerifyEmailProps {
   verificationCode?: string;
 }
 
-export default function EnrouteVerifyEmail({
+export default function SoulreachVerifyEmail({
   verificationCode,
-}: EnrouteVerifyEmailProps) {
+}: SoulreachVerifyEmailProps) {
   return (
     <Html>
       <Head />
-      <Preview>Enroute Email Verification</Preview>
+      <Preview>Soulreach Email Verification</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={coverSection}>
@@ -31,17 +31,17 @@ export default function EnrouteVerifyEmail({
               <Img
                 style={image}
                 src={
-                  "https://res.cloudinary.com/dr2jx6j6m/image/upload/v1722345467/enroute-image_nygkz0.jpg"
+                  "https://res.cloudinary.com/dr2jx6j6m/image/upload/v1722345467/soulreach-image_nygkz0.jpg"
                 }
                 width="75"
                 height="75"
-                alt="Enroute's Logo"
+                alt="Soulreach's Logo"
               />
             </Section>
             <Section style={upperSection}>
               <Heading style={h1}>Verify your email address</Heading>
               <Text style={mainText}>
-                Thanks for creating your Enroute account. We want to make sure
+                Thanks for creating your Soulreach account. We want to make sure
                 it's really you. Please enter the following verification code
                 when prompted.
               </Text>
@@ -57,15 +57,15 @@ export default function EnrouteVerifyEmail({
             <Hr />
             <Section style={lowerSection}>
               <Text style={cautionText}>
-                Enroute will never email you and ask you to disclose or verify
+                Soulreach will never email you and ask you to disclose or verify
                 your password, credit card, or banking account number.
               </Text>
             </Section>
           </Section>
           <Text style={footerText}>
-            This message was produced and distributed by Enroute, Inc., The
+            This message was produced and distributed by Soulreach, Inc., The
             Karen Stables, P.O Box 51379-00100. © 2024 All rights reserved.
-            Enroute is a registered trademark of{" "}
+            Soulreach is a registered trademark of{" "}
             <Link href="https://liquidhack.co.ke" target="_blank" style={link}>
               liquidhack.co.ke
             </Link>
@@ -78,7 +78,7 @@ export default function EnrouteVerifyEmail({
             For support, contact us at: Phone: +254 716 355 644 <br />
             Email:{" "}
             <Link href="mailto:support@liquidhack.co.ke" style={link}>
-              enroute@podium.beauty
+              soulreach@podium.beauty
             </Link>
           </Text>
         </Container>
