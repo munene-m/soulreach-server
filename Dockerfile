@@ -15,7 +15,9 @@ WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules/@types ./node_modules/@types
 
+# Install production dependencies
 RUN npm ci --only=production \
     && npm cache clean --force
 
