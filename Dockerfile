@@ -7,6 +7,8 @@ RUN npm ci
 
 COPY . .
 
+RUN npm i @types/axios @types/dotenv -D
+
 RUN npm run build 
 
 FROM node:18-alpine AS production
