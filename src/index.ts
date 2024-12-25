@@ -21,7 +21,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-connectDB();
 
 const PORT = config.port;
 
@@ -38,6 +37,7 @@ app.use(`/${config.prefix}/soulWinning`, soulWinningRoute);
 app.use(`/${config.prefix}/church`, churchRoute);
 
 app.listen(PORT, async () => {
+  await connectDB();
   // await adminRegister();
   console.log(`Server running on port ${PORT}`);
 });
